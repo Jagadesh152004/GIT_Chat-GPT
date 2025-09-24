@@ -6,6 +6,8 @@ const App = () => {
   const [messages, setMessages] = useState([]); // store chat messages
   const [showDropdown, setShowDropdown] = useState(false); // for + button dropdown
   const [popupMessage, setPopupMessage] = useState(""); // for upload success
+  const [awaitingLevel, setAwaitingLevel] = useState(false); // waiting for level selection
+  const [uploadedScreenshot, setUploadedScreenshot] = useState(null); // store uploaded file
   const textareaRef = useRef(null);
 
   // Auto-expand textarea
@@ -17,16 +19,14 @@ const App = () => {
     }
   }, [input]);
 
-  // Handle send
+  // Handle normal chat send
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    // Add user message immediately
     setMessages((prev) => [...prev, { text: input, sender: "user" }]);
     const userMessage = input;
     setInput("");
 
-    // Focus textarea after sending
     if (textareaRef.current) textareaRef.current.focus();
 
     try {
@@ -49,7 +49,7 @@ const App = () => {
     }
   };
 
-  // Handle key presses
+  // Handle Enter key
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -58,12 +58,26 @@ const App = () => {
   };
 
   // Handle screenshot upload
-  const handleScreenshotUpload = async (e) => {
+  const handleScreenshotUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
+    setUploadedScreenshot(file);      // store uploaded file
+    setAwaitingLevel(true);           // show level selection popup
+    setPopupMessage("Screenshot uploaded successfully! Choose explanation level.");
+
+    setTimeout(() => setPopupMessage(""), 2000);
+    e.target.value = "";
+  };
+
+  // Handle level selection
+  const handleLevelSelect = async (level) => {
+    if (!uploadedScreenshot) return;
+
+    setAwaitingLevel(false);
     const formData = new FormData();
-    formData.append("screenshot", file);
+    formData.append("screenshot", uploadedScreenshot);
+    formData.append("level", level);
 
     try {
       const res = await fetch("http://localhost:5000/api/upload-screenshot", {
@@ -72,24 +86,17 @@ const App = () => {
       });
       const data = await res.json();
 
-      if (res.ok) {
-        setPopupMessage(data.message);
-
-        // Add GPT-4 reply from screenshot to messages
-        setMessages((prev) => [
-          ...prev,
-          { text: data.gptReply || "No GPT response", sender: "bot" },
-        ]);
-      } else {
-        setPopupMessage("Failed to upload screenshot");
-      }
+      setMessages((prev) => [
+        ...prev,
+        { text: data.gptReply || "No GPT response", sender: "bot" },
+      ]);
     } catch (err) {
       console.error(err);
-      setPopupMessage("Error uploading screenshot");
+      setPopupMessage("Error analyzing screenshot");
+      setTimeout(() => setPopupMessage(""), 2000);
     }
 
-    setTimeout(() => setPopupMessage(""), 2000);
-    e.target.value = "";
+    setUploadedScreenshot(null);
   };
 
   return (
@@ -241,6 +248,30 @@ const App = () => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Level selection popup */}
+      {awaitingLevel && (
+        <div className="fixed bottom-32 left-1/2 transform -translate-x-1/2 bg-zinc-900 p-4 rounded shadow-lg z-50 flex space-x-4">
+          <button
+            className="bg-blue-600 px-3 py-2 rounded hover:bg-blue-500"
+            onClick={() => handleLevelSelect(1)}
+          >
+            Answer Only
+          </button>
+          <button
+            className="bg-green-600 px-3 py-2 rounded hover:bg-green-500"
+            onClick={() => handleLevelSelect(2)}
+          >
+            One Sentence
+          </button>
+          <button
+            className="bg-purple-600 px-3 py-2 rounded hover:bg-purple-500"
+            onClick={() => handleLevelSelect(3)}
+          >
+            Detailed
+          </button>
         </div>
       )}
 

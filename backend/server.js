@@ -45,16 +45,22 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// ---------------------- SCREENSHOT UPLOAD + GPT (no Azure Blob) ----------------------
+// ---------------------- SCREENSHOT UPLOAD + GPT (with level) ----------------------
 app.post("/api/upload-screenshot", upload.single("screenshot"), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
+  // Read level from frontend (default to 1)
+  const level = req.body.level || 1;
+
+  // Customize instruction based on selected level
+  let instruction = "Provide the answer only. Do not add extra explanation.";
+  if (level == 2) instruction =  "Explain in one concise sentence relevant to the answer.";
+  if (level == 3) instruction = "Provide a detailed explanation, fully relevant to the answer.";
+
   try {
-    // Convert file to Base64
     const base64Image = req.file.buffer.toString("base64");
     const mimeType = req.file.mimetype; // e.g., "image/png"
 
-    // Send screenshot directly to GPT-4 Vision
     const gptResponse = await fetch(process.env.AZURE_GPT4_ENDPOINT, {
       method: "POST",
       headers: {
@@ -70,16 +76,8 @@ app.post("/api/upload-screenshot", upload.single("screenshot"), async (req, res)
           {
             role: "user",
             content: [
-              {
-                type: "text",
-                text: "Analyze this screenshot and explain it in three levels of detail.",
-              },
-              {
-                type: "image_url",
-                image_url: {
-                  url: `data:${mimeType};base64,${base64Image}`,
-                },
-              },
+              { type: "text", text: instruction },
+              { type: "image_url", image_url: { url: `data:${mimeType};base64,${base64Image}` } },
             ],
           },
         ],
