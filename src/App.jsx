@@ -5,10 +5,13 @@ const App = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]); // store chat messages
   const [showDropdown, setShowDropdown] = useState(false); // for + button dropdown
-  const [popupMessage, setPopupMessage] = useState(""); // for upload success
+  const [popupMessage, setPopupMessage] = useState(""); // popup text
+  const [popupType, setPopupType] = useState("success"); // 'success' or 'error'
   const [awaitingLevel, setAwaitingLevel] = useState(false); // waiting for level selection
   const [uploadedScreenshot, setUploadedScreenshot] = useState(null); // store uploaded file
+  const [loading, setLoading] = useState(false); // bot typing indicator
   const textareaRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   // Auto-expand textarea
   useEffect(() => {
@@ -19,6 +22,13 @@ const App = () => {
     }
   }, [input]);
 
+  // Auto scroll
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, loading]);
+
   // Handle normal chat send
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -28,6 +38,7 @@ const App = () => {
     setInput("");
 
     if (textareaRef.current) textareaRef.current.focus();
+    setLoading(true);
 
     try {
       const res = await fetch("http://localhost:5000/api/chat", {
@@ -46,6 +57,8 @@ const App = () => {
         ...prev,
         { text: "⚠️ Error Azure API is not Connected Properly", sender: "bot" },
       ]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,9 +75,10 @@ const App = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setUploadedScreenshot(file);      // store uploaded file
-    setAwaitingLevel(true);           // show level selection popup
+    setUploadedScreenshot(file); // store uploaded file
+    setAwaitingLevel(true); // show level selection popup
     setPopupMessage("Screenshot uploaded successfully! Choose explanation level.");
+    setPopupType("success");
 
     setTimeout(() => setPopupMessage(""), 2000);
     e.target.value = "";
@@ -79,6 +93,7 @@ const App = () => {
     formData.append("screenshot", uploadedScreenshot);
     formData.append("level", level);
 
+    setLoading(true);
     try {
       const res = await fetch("http://localhost:5000/api/upload-screenshot", {
         method: "POST",
@@ -93,14 +108,27 @@ const App = () => {
     } catch (err) {
       console.error(err);
       setPopupMessage("Error analyzing screenshot");
+      setPopupType("error");
       setTimeout(() => setPopupMessage(""), 2000);
+    } finally {
+      setLoading(false);
+      setUploadedScreenshot(null);
     }
-
-    setUploadedScreenshot(null);
   };
 
   return (
     <div className="h-screen w-screen flex flex-col bg-black overflow-x-hidden">
+      {/* Top popup message */}
+      {popupMessage && (
+        <div
+          className={`fixed top-10 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-4xl shadow-lg z-50 ${
+            popupType === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
+          }`}
+        >
+          {popupMessage}
+        </div>
+      )}
+
       {messages.length === 0 ? (
         <div className="flex flex-col items-center justify-center flex-1 space-y-6">
           <div className="text-center">
@@ -174,7 +202,7 @@ const App = () => {
         // After first message -> Chat mode
         <div className="flex flex-col flex-1">
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
             {messages.map((msg, i) => (
               <div
                 key={i}
@@ -187,6 +215,17 @@ const App = () => {
                 {msg.text}
               </div>
             ))}
+
+            {/* Bot typing spinner bubble */}
+            {loading && (
+              <div className="p-3 rounded-2xl max-w-lg w-fit bg-black text-gray-200 self-start mr-auto flex items-center space-x-2">
+                <div className="w-5 h-5 border-4 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+                <span>Bot is typing...</span>
+              </div>
+            )}
+
+            {/* Auto scroll anchor */}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input Box (stuck to bottom) */}
@@ -204,9 +243,9 @@ const App = () => {
 
                 {/* Dropdown */}
                 {showDropdown && (
-                  <div className="absolute -top-20 left-5 bg-zinc-900 border border-zinc-700 rounded shadow-lg z-50 w-48 ">
+                  <div className="absolute -top-20 left-5 bg-zinc-900 border border-zinc-700 rounded-2xl shadow-lg z-50 w-48 text-white">
                     <button
-                      className="w-full text-left px-4 py-2 hover:bg-zinc-700 focus:outline-none focus:ring-1 focus:ring-gray-500"
+                      className="w-full text-center px-4 py-2 hover:bg-zinc-700 focus:outline-none focus:ring-1 focus:ring-gray-500 rounded-2xl"
                       onClick={() => document.getElementById("screenshotInput").click()}
                     >
                       Upload Screenshot
@@ -253,32 +292,25 @@ const App = () => {
 
       {/* Level selection popup */}
       {awaitingLevel && (
-        <div className="fixed bottom-32 left-1/2 transform -translate-x-1/2 bg-zinc-900 p-4 rounded shadow-lg z-50 flex space-x-4">
+        <div className="fixed bottom-40 left-1/2 transform -translate-x-1/2 bg-zinc-900 p-4 rounded-xl shadow-lg z-50 flex space-x-4  hover:shadow-zinc-800">
           <button
-            className="bg-blue-600 px-3 py-2 rounded hover:bg-blue-500"
+            className="bg-blue-600 px-3 py-2 rounded-4xl hover:bg-blue-500 shadow-xs hover:shadow-blue-500 font-semibold"
             onClick={() => handleLevelSelect(1)}
           >
             Answer Only
           </button>
           <button
-            className="bg-green-600 px-3 py-2 rounded hover:bg-green-500"
+            className="bg-green-600 px-3 py-2 rounded-4xl hover:bg-green-500 shadow-xs hover:shadow-green-500 font-semibold"
             onClick={() => handleLevelSelect(2)}
           >
             One Sentence
           </button>
           <button
-            className="bg-purple-600 px-3 py-2 rounded hover:bg-purple-500"
+            className="bg-purple-600 px-3 py-2 rounded-4xl hover:bg-purple-500 shadow-xs hover:shadow-purple-500 font-semibold"
             onClick={() => handleLevelSelect(3)}
           >
             Detailed
           </button>
-        </div>
-      )}
-
-      {/* Popup message */}
-      {popupMessage && (
-        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50">
-          {popupMessage}
         </div>
       )}
 

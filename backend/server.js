@@ -53,9 +53,9 @@ app.post("/api/upload-screenshot", upload.single("screenshot"), async (req, res)
   const level = req.body.level || 1;
 
   // Customize instruction based on selected level
-  let instruction = "Provide the answer only. Do not add extra explanation.";
-  if (level == 2) instruction =  "Explain in one concise sentence relevant to the answer.";
-  if (level == 3) instruction = "Provide a detailed explanation, fully relevant to the answer.";
+  let instruction = "Give only the direct answer or option name. Nothing else.";
+  if (level == 2) instruction =  "Give only one sentence about the answer.It must be less than 50 words";
+  if (level == 3) instruction = "Give a full explanation of the answer only.No unrelated details";
 
   try {
     const base64Image = req.file.buffer.toString("base64");
