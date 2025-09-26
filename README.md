@@ -69,3 +69,7 @@ The main goal of this project is to provide a smart assistant that can:
    STARTING PAGE 
 
    ![image alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/99e66a2d13bd5db8a84d5200aed5d803688863db/Screenshot%202025-09-26%20105032.png)
+
+   STARTING NORMAL CHAT WITH CHATGPT_4
+
+   ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/982c138e6781b4b0d11118ff6be16f5038ba14df/Screenshot%202025-09-26%20105245.png)
