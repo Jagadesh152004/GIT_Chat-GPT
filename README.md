@@ -67,4 +67,5 @@ The main goal of this project is to provide a smart assistant that can:
    This project is a next-gen chat assistant that combines chat + vision AI, providing a multi-modal experience where users can interact with GPT-4 using both text and images, all inside a smooth and modern interface.
 
    STARTING PAGE 
-   
+
+   ![image alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/99e66a2d13bd5db8a84d5200aed5d803688863db/Screenshot%202025-09-26%20105032.png)
