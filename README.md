@@ -85,4 +85,7 @@ The main goal of this project is to provide a smart assistant that can:
    SAMPLE SCREENSHOT
 
    ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/fbeac6d69afc34c7d473cc62e227b9fe39b4b76c/Screenshot%202025-09-13%20112117.png)
-   
+
+   CHOOSING THE LEVEL WITH SUCCESSFUL POPUP MESSAGE
+
+   ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/7929b0f8f508183c2e5a9f8af00adea0a1e5eaa9/Screenshot%202025-09-26%20105738.png)
