@@ -97,3 +97,7 @@ The main goal of this project is to provide a smart assistant that can:
    SECOND LEVEL - EXPLAIN IN ONE SENTENCE
 
    ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/bb50b9f335f3ee5bf47e651ac7b700202f19a9a8/Screenshot%202025-09-26%20110903.png)
+
+   THIRD LEVEL - EXPLAIN IN MORE DETAIL
+
+   ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/90a1119e3d71582fd76b5970a3c3b6f53318508d/Screenshot%202025-09-26%20110953.png)
