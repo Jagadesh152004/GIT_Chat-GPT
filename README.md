@@ -18,28 +18,28 @@
 
 The main goal of this project is to provide a smart assistant that can:
 
-*  Optimize Azure GPT token usage
+* Optimize Azure GPT token usage
 
-   Control response length using levels of explanation -
-   Users can choose how detailed they want the AI’s response:
+  Control response length using levels of explanation -
+  Users can choose how detailed they want the AI’s response:
 
-   Answer only (concise result).
+* Answer only (concise result).
 
-   One sentence (short summary).
+* One sentence (short summary).
 
-   Detailed explanation (in-depth reasoning).
+* Detailed explanation (in-depth reasoning).
 
-   Send only the required content to the API instead of long histories.
+  Send only the required content to the API instead of long histories.
 
-   Use structured system + user prompts to reduce token waste.
+  Use structured system + user prompts to reduce token waste.
 
-*  Provide a cost-efficient AI assistant
+* Provide a cost-efficient AI assistant
 
-   Users can chat normally, but the backend ensures unnecessary tokens are not consumed.
+  Users can chat normally, but the backend ensures unnecessary tokens are not consumed.
 
-   Screenshot uploads are processed with minimal but effective instructions.
+  Screenshot uploads are processed with minimal but effective instructions.
 
-*  Multi-modal support
+* Multi-modal support
 
    Handle text queries (normal chat).
 
