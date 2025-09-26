@@ -73,3 +73,7 @@ The main goal of this project is to provide a smart assistant that can:
    STARTING NORMAL CHAT WITH CHATGPT_4
 
    ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/982c138e6781b4b0d11118ff6be16f5038ba14df/Screenshot%202025-09-26%20105245.png)
+
+   NORMAL ASKING QUERY WITH CHATGPT 4
+
+   ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/daa3c5b891a9a0da385386175da57f7e2908ba88/Screenshot%202025-09-26%20105521.png)
