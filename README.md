@@ -77,3 +77,7 @@ The main goal of this project is to provide a smart assistant that can:
    NORMAL ASKING QUERY WITH CHATGPT 4
 
    ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/daa3c5b891a9a0da385386175da57f7e2908ba88/Screenshot%202025-09-26%20105521.png)
+
+   UPLOADING SCREENSHOT 
+
+   ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/09a4bcf430db4e7ef93924675bb862d511299c72/Screenshot%202025-09-26%20120730.png)
