@@ -81,3 +81,8 @@ The main goal of this project is to provide a smart assistant that can:
    UPLOADING SCREENSHOT 
 
    ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/09a4bcf430db4e7ef93924675bb862d511299c72/Screenshot%202025-09-26%20120730.png)
+
+   SAMPLE SCREENSHOT
+
+   ![image_alt](https://github.com/Jagadesh152004/GIT_Chat-GPT/blob/fbeac6d69afc34c7d473cc62e227b9fe39b4b76c/Screenshot%202025-09-13%20112117.png)
+   
