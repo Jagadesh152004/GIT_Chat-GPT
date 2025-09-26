@@ -65,3 +65,6 @@ The main goal of this project is to provide a smart assistant that can:
 
   ✨ In short:
    This project is a next-gen chat assistant that combines chat + vision AI, providing a multi-modal experience where users can interact with GPT-4 using both text and images, all inside a smooth and modern interface.
+
+   STARTING PAGE 
+   
