@@ -8,9 +8,9 @@
 
  The project is built as a full-stack application with:
 
- Frontend → React + Tailwind CSS for a clean, responsive chat interface.
+* Frontend → React + Tailwind CSS for a clean, responsive chat interface.
 
- Backend → Node.js + Express for API handling and integration with Azure OpenAI GPT-4.
+* Backend → Node.js + Express for API handling and integration with Azure OpenAI GPT-4.
 
  It delivers a ChatGPT-like experience while adding unique features such as image-based question answering and customizable explanation levels.
 
