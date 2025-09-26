@@ -1,12 +1,67 @@
-# React + Vite
+1 . ABOUT MY PROJECT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ This project is an AI-powered Chat Assistant built with React (frontend) and Node.js + Express (backend), integrated with Azure GPT-4.
 
-Currently, two official plugins are available:
+ The key innovation is that it is designed with a focus on token optimization – reducing unnecessary token usage when interacting with GPT models. Since API usage is billed based on tokens, this project ensures cost efficiency while maintaining a smooth user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ It provides both chat-based interaction and image-based analysis, giving users flexibility while still optimizing API calls.
 
-## Expanding the ESLint configuration
+ The project is built as a full-stack application with:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+ Frontend → React + Tailwind CSS for a clean, responsive chat interface.
+
+ Backend → Node.js + Express for API handling and integration with Azure OpenAI GPT-4.
+
+ It delivers a ChatGPT-like experience while adding unique features such as image-based question answering and customizable explanation levels.
+
+2 . MAIN PURPOSE
+
+The main goal of this project is to provide a smart assistant that can:
+
+*  Optimize Azure GPT token usage
+
+   Control response length using levels of explanation -
+   Users can choose how detailed they want the AI’s response:
+
+   Answer only (concise result).
+
+   One sentence (short summary).
+
+   Detailed explanation (in-depth reasoning).
+
+   Send only the required content to the API instead of long histories.
+
+   Use structured system + user prompts to reduce token waste.
+
+*  Provide a cost-efficient AI assistant
+
+   Users can chat normally, but the backend ensures unnecessary tokens are not consumed.
+
+   Screenshot uploads are processed with minimal but effective instructions.
+
+*  Multi-modal support
+
+   Handle text queries (normal chat).
+
+   Handle image uploads (MCQs, problems, diagrams) and give optimized responses.
+
+3 . INTERFACE OVERVIEW
+
+  The user interface is designed for simplicity and usability:
+
+  Chat Layout: Messages appear in a clean, modern chat UI with different styles for user and bot messages.
+
+  Input Box: A textarea that expands as the user types, with support for Enter-to-send.
+
+  Floating Actions (+): Users can open a small dropdown to upload a screenshot.
+
+  Popup Notifications: Temporary alerts for successful uploads or errors.
+
+  Explanation Level Selection: After uploading a screenshot, users choose whether they want a short or detailed response.
+
+  Typing Indicator: Shows “Bot is typing…” while waiting for the AI response.
+
+  Dark Mode Style: Black/gray theme with smooth rounded components for a professional feel.
+
+  ✨ In short:
+   This project is a next-gen chat assistant that combines chat + vision AI, providing a multi-modal experience where users can interact with GPT-4 using both text and images, all inside a smooth and modern interface.
