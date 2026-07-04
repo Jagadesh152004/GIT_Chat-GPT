@@ -10,7 +10,10 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: ["http://localhost:5173",
+  "https://YOUR-VERCEL-APP.vercel.app"
+] 
+}));
 
 // Multer setup for file uploads
 const storage = multer.memoryStorage();
@@ -53,7 +56,7 @@ app.post("/api/upload-screenshot", upload.single("screenshot"), async (req, res)
   const level = req.body.level || 1;
 
   // Customize instruction based on selected level
-  let instruction = "Give only the direct answer or option name. Nothing else.";
+  let instruction = "only answer or option name";
   if (level == 2) instruction =  "Give only one sentence about the answer.It must be less than 50 words";
   if (level == 3) instruction = "Give a full explanation of the answer only.No unrelated details";
 
