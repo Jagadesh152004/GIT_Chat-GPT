@@ -41,7 +41,7 @@ const App = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/chat", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage }),
@@ -95,7 +95,7 @@ const App = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/upload-screenshot", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/upload-screenshot`, {
         method: "POST",
         body: formData,
       });
